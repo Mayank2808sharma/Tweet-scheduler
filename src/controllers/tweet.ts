@@ -1,16 +1,15 @@
 import { Request, Response } from "express";
 import Tweet from "../models/tweet";
+import { rwClient } from "./../twitterClient";
 
 export async function scheduleTweet(req: Request, res: Response) {
-  try {
-    const tweet = new Tweet(req.body);
-    await tweet.save();
-    res.status(201).json(tweet);
-  } catch (error) {
-    if (error instanceof Error) {
-      res.status(400).json({ message: error.message });
-    }
-  }
+    try {
+        const {content} = req.body;
+        const resp = await rwClient.v2.tweet(content);
+        return res.json({"status":resp})
+      } catch (error) {
+        console.error('Error posting tweet:', error);
+      }
 }
 
 export async function getAllTweets(req: Request, res: Response) {
