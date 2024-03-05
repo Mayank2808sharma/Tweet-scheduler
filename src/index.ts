@@ -2,6 +2,7 @@ import express from "express";
 import connectToDB from "./connectDB";
 import tweetrouter from "./routes/tweet";
 import dotenv from 'dotenv';
+import { startTweetScheduler } from "./utils/scheduler";
 dotenv.config();
 
 const app = express();
@@ -13,6 +14,8 @@ connectToDB("mongodb://127.0.0.1:27017/twitter")
 
 app.use(express.json())
 app.use('/tweet',tweetrouter);
+
+startTweetScheduler();
 
 app.listen(8000, () => {
   console.log("running on PORT 8000");

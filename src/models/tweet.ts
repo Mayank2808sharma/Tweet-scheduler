@@ -9,7 +9,7 @@ interface ITweet extends Document {
 
 const tweetSchema = new mongoose.Schema({
   content: { type: String, required: true, maxlength: 280 },
-  scheduledTime: { type: Date, required: true },
+  scheduledTime: { type: Date, default: Date.now },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });
